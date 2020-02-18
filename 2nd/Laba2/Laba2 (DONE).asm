@@ -2,6 +2,7 @@
 	local @w4,@w5,@w6,@w7
 	mov cl,dln ; счетчик цикла
 	mov bp,0 ; индексный регистр
+
 	@w4:
 	mov al,spisok+bp
 	cmp al,p
@@ -9,16 +10,7 @@
 	jne @w6
 	
 	@w5: 
-
-	;mov al, spisok+bp ; запоминаем позицию
-	;mov poz, al
-	;mov si,di
-        ;dec di
-        ;rep movsb
-        ;dec dln
-	;add bp,2
 	mov al, cl
-	;add bp,1
 	CLD ; положить DF = 0 для обработки слева направо
 	LEA SI, spisok+bp+1 ; занести смещение адреса SOURCE в SI
 	LEA DI, spisok+bp;-1 ; занести смещение адреса DEST в DI
@@ -26,24 +18,9 @@
 	sub ax,bp
 	MOV CX, AX ; занести счетчик элементов в CX
 	REP MOVS spisok+bp, spisok+bp+1
+	sub dln,1
 	mov cl,al
-	;sub dln,1
-	;lea si, spisok+bp+1
-	;mov spisok+bp, si
-	;sub bp,1
-	;lea di, spisok+bp+1
-	;mov cx, 29
-	;cld
-	;rep movsb
 
-        ;mov cl,0
-        ;mov ah,09h
-	;lea dx,Mes2
-	;int 21h
-
-
-        ;loop @w4
-        ;ret
 	; сообщение об отсутствии числа
 	@w6: 
 	add bp,1 ; к след.элементу списка
@@ -53,7 +30,7 @@
 
 	@w7:
 	mov ah,09h
-	;lea dx,Mes
+	lea dx,Mes
 	int 21h
 
 endm
@@ -88,7 +65,7 @@ call perehod
 ;************* Макровызов ********************************
 MINIMUM sk
 ;****************************************************
-sub dln,1
+;sub dln,1
 ;call otvet
 call perehod
 call pechat
